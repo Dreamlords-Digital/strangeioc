@@ -1,0 +1,15 @@
+{
+  "name": "com.dreamlordsdigital.strangeioc",
+  "version": "1.0.5",
+  "displayName": "Strange IoC",
+  "description": "Dreamlords Digital's fork of Strange IoC.",
+  "unity": "2018.4",
+  "keywords": [
+    "utility",
+    "library"
+  ],
+  "author": {
+    "name": "Dreamlords Digital",
+    "url": "https://www.dreamlordsdigital.com"
+  }
+}
