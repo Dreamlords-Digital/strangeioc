@@ -16,38 +16,38 @@
 
 /**
  * @class Inject
- * 
+ *
  * The `[Inject]` attribute marks a setter Injection point.
- * 
+ *
  * Example:
 
 		[Inject]
 		public IMyInterface myInstance{get;set;}
 
- * 
+ *
  * Inject tags can also specify a name:
- * 
+ *
 
  		[Inject(SomeEnum.VALUE)]
  		public IMyInterface myInstance{get;set;}
 
 
  * @class Name
- *  
- * When a parameter of a constructor or pseudo-constructor is tagged with [Name], 
- * the injector can discriminate between different classes that satisfy the same interface.  
- * This means that constructors and pseudo-constructors can used named injection just like 
+ *
+ * When a parameter of a constructor or pseudo-constructor is tagged with [Name],
+ * the injector can discriminate between different classes that satisfy the same interface.
+ * This means that constructors and pseudo-constructors can used named injection just like
  * setter injection.
- * 
+ *
  * @class Construct
- * 
+ *
  * The `[Construct]` attribute marks a preferred Constructor. If omitted,
  * the Reflector will mark as Constructor the shortest available
  * Constructor. Obviously, if there only one constructor, this tag
  * is not requried.
- * 
+ *
  * @class PostConstruct
- * 
+ *
  * The `[PostConstruct]` attribute marks one or more methods as PostConstructors.
  * A PostConstructor is triggered immediately after injection. This allows
  * you to use use a PostConstructor in much the same way as a Constructor,
@@ -56,26 +56,27 @@
  *
  * You may optionally include a priority int on your PostConstructor. This allows for multiple
  * PostConstruction methods which will fire in a predictable order.
- * 
+ *
  * @class Deconstruct
- * 
+ *
  * Unsupported.
  */
 
 using System;
 
-[AttributeUsage(AttributeTargets.Property, 
+[JetBrains.Annotations.MeansImplicitUse(JetBrains.Annotations.ImplicitUseKindFlags.Assign)]
+[AttributeUsage(AttributeTargets.Property,
 		AllowMultiple = false,
 		Inherited = true)]
 public class Inject: Attribute
 {
 	public Inject(){}
-	
+
 	public Inject(object n)
 	{
 		name = n;
 	}
-	
+
 	public object name{get; set;}
 }
 
@@ -83,9 +84,9 @@ public class Inject: Attribute
 [AttributeUsage(AttributeTargets.Parameter,
         AllowMultiple = false,
         Inherited = false)]
-public class Name : Attribute 
+public class Name : Attribute
 {
-	public Name(object n) 
+	public Name(object n)
 	{
 		name = n;
 	}
@@ -94,7 +95,7 @@ public class Name : Attribute
 }
 
 //Tag [Construct] to perform construction injection
-[AttributeUsage(AttributeTargets.Constructor, 
+[AttributeUsage(AttributeTargets.Constructor,
 		AllowMultiple = false,
 		Inherited = true)]
 public class Construct: Attribute
@@ -103,7 +104,8 @@ public class Construct: Attribute
 }
 
 //Tag [PostConstruct] to perform post-injection construction actions
-[AttributeUsage(AttributeTargets.Method, 
+[JetBrains.Annotations.MeansImplicitUse(JetBrains.Annotations.ImplicitUseKindFlags.Access)]
+[AttributeUsage(AttributeTargets.Method,
 		AllowMultiple = false,
 		Inherited = true)]
 public class PostConstruct: Attribute
@@ -118,7 +120,7 @@ public class PostConstruct: Attribute
 	public int priority{get; set;}
 }
 
-[AttributeUsage(AttributeTargets.Method, 
+[AttributeUsage(AttributeTargets.Method,
 		AllowMultiple = false,
 		Inherited = true)]
 public class Deconstruct: Attribute
