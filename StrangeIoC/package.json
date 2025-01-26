@@ -4,6 +4,7 @@
   "displayName": "Strange IoC",
   "description": "Dreamlords Digital's fork of Strange IoC.",
   "unity": "2018.4",
+  "documentationUrl": "http://strangeioc.github.io/strangeioc/TheBigStrangeHowTo.html",
   "keywords": [
     "utility",
     "library"
@@ -11,5 +12,12 @@
   "author": {
     "name": "Dreamlords Digital",
     "url": "https://www.dreamlordsdigital.com"
-  }
+  },
+  "samples": [
+    {
+        "displayName": "Simple Example Code",
+        "description": "Contains simple code and assets to demonstrage usage of StrangeIoC.",
+        "path": "Samples~/SimpleExample"
+    }
+  ]
 }
