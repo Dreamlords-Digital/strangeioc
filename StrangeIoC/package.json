@@ -1,7 +1,7 @@
 {
   "name": "com.dreamlordsdigital.strangeioc",
   "version": "1.0.5",
-  "displayName": "Strange IoC",
+  "displayName": "DLD Strange IoC",
   "description": "Dreamlords Digital's fork of Strange IoC.",
   "unity": "2018.4",
   "documentationUrl": "http://strangeioc.github.io/strangeioc/TheBigStrangeHowTo.html",
@@ -15,9 +15,9 @@
   },
   "samples": [
     {
-        "displayName": "Simple Example Code",
-        "description": "Contains simple code and assets to demonstrage usage of StrangeIoC.",
-        "path": "Samples~/SimpleExample"
+      "displayName": "Simple Example Code",
+      "description": "Contains simple code and assets to demonstrage usage of StrangeIoC.",
+      "path": "Samples~/SimpleExample"
     }
   ]
 }

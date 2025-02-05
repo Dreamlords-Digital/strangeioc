@@ -1,5 +1,5 @@
 {
-    "name": "com.dreamlordsdigital.strangeioc.Tests",
+    "name": "DLD.StrangeIoC.Tests",
     "rootNamespace": "strange.unittests",
     "references": [
         "GUID:03deb91d66b8a8240ac1b9fb3be64e71",
