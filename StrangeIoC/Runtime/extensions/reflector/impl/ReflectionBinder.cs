@@ -35,6 +35,8 @@ namespace strange.extensions.reflector.impl
 {
 	public class ReflectionBinder : strange.framework.impl.Binder, IReflectionBinder
 	{
+		MemberFilter hasInjectFilter = new MemberFilter(hasInjectAttribute);
+
 		public ReflectionBinder ()
 		{
 		}
@@ -173,13 +175,29 @@ namespace strange.extensions.reflector.impl
 
 		private void mapSetters(IReflectedClass reflected, IBinding binding, Type type)
 		{
-			MemberInfo[] members = type.FindMembers(MemberTypes.Property,
+			MemberInfo[] selfMembers = type.FindMembers(MemberTypes.Property,
 														  BindingFlags.FlattenHierarchy |
 														  BindingFlags.SetProperty |
 														  BindingFlags.Public |
 														  BindingFlags.NonPublic |
 														  BindingFlags.Instance,
-														  null, null);
+														  hasInjectFilter, null);
+
+			List<MemberInfo> members = new List<MemberInfo>(selfMembers.Length);
+			members.AddRange(selfMembers);
+
+			Type baseType = type.BaseType;
+			while (baseType != null)
+			{
+				MemberInfo[] baseMembers = baseType.FindMembers(MemberTypes.Property,
+														  BindingFlags.SetProperty |
+														  BindingFlags.NonPublic |
+														  BindingFlags.Instance,
+														  hasInjectFilter, null);
+				members.AddRange(baseMembers);
+
+				baseType = baseType.BaseType;
+			}
 
 			//propertyinfo.name to reflectedattribute
 			//This is to test for 'hidden' or overridden injections.
@@ -192,8 +210,8 @@ namespace strange.extensions.reflector.impl
 				{
 					Inject attr = injections [0] as Inject;
 					PropertyInfo point = member as PropertyInfo;
-					Type baseType = member.DeclaringType.BaseType;
-					bool hasInheritedProperty = baseType != null ? baseType.GetProperties().Any(p => p.Name == point.Name) : false;
+					Type memberBaseType = member.DeclaringType.BaseType;
+					bool hasInheritedProperty = memberBaseType != null ? memberBaseType.GetProperties().Any(p => p.Name == point.Name) : false;
 					bool toAddOrOverride = true; //add or override by default
 
 					//if we have an overriding value, we need to know whether to override or leave it out.
@@ -207,6 +225,11 @@ namespace strange.extensions.reflector.impl
 				}
 			}
 			reflected.Setters = namedAttributes.Values.ToArray();
+		}
+
+		private static bool hasInjectAttribute(MemberInfo memberInfo, object o)
+		{
+			return memberInfo.CustomAttributes.Any(a => a.AttributeType == typeof(Inject));
 		}
 	}
 
